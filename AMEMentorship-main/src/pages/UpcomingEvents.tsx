@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
+import { Calendar, Clock, MapPin, ArrowRight, Check } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 const events = [
   { title: "Resume Workshop for AME Grads", date: "Mar 15, 2026", time: "2:00 PM EST", location: "Online (Zoom)", description: "Learn how to build an aviation-specific resume that gets interviews. Bring your current resume for live feedback.", category: "Workshop" },
@@ -12,6 +14,19 @@ const events = [
 ];
 
 export default function UpcomingEvents() {
+  const { isAuthenticated, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleEventClick = (event: typeof events[0]) => {
+    if (isAuthenticated) {
+      // Navigate to event detail page (you can implement this route)
+      navigate(`/events/${encodeURIComponent(event.title)}`);
+    } else {
+      toast("Please log in to view event details.");
+      navigate("/signin");
+    }
+  };
+
   return (
     <>
       <section className="section-padding bg-primary">
@@ -26,8 +41,15 @@ export default function UpcomingEvents() {
       <section className="section-padding bg-background">
         <div className="container-wide mx-auto">
           <div className="space-y-6">
-            {events.map((event) => (
-              <Card key={event.title} className="border-0 shadow-sm bg-card hover:shadow-md transition-shadow">
+            {events.map((event) => {
+              const isRegistered = user && localStorage.getItem(`event_registration_${user.id}_${event.title}`) === "true";
+              
+              return (
+              <Card
+                key={event.title}
+                className="border-0 shadow-sm bg-card hover:shadow-md transition-shadow cursor-pointer"
+                onClick={() => handleEventClick(event)}
+              >
                 <CardContent className="p-6 md:p-8">
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
@@ -42,13 +64,21 @@ export default function UpcomingEvents() {
                         <span className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {event.location}</span>
                       </div>
                     </div>
-                    <Button variant="gold" size="sm">
-                      Register <ArrowRight className="h-4 w-4" />
+                    <Button 
+                      variant={isRegistered ? "secondary" : "gold"} 
+                      size="sm"
+                      className={isRegistered ? "opacity-75 cursor-not-allowed pointer-events-none" : ""}
+                    >
+                      {isRegistered ? (
+                        <>Registered <Check className="ml-2 h-4 w-4" /></>
+                      ) : (
+                        <>Register <ArrowRight className="ml-2 h-4 w-4" /></>
+                      )}
                     </Button>
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            )})}
           </div>
 
           <div className="text-center mt-12">

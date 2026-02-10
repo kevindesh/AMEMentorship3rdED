@@ -32,6 +32,7 @@ import MemberForum from "./pages/member/MemberForum";
 import ThreadDetail from "./pages/member/ThreadDetail";
 
 import NotFound from "./pages/NotFound";
+import EventDetail from "./pages/EventDetail";
 
 const queryClient = new QueryClient();
 
@@ -60,6 +61,7 @@ const App = () => (
               <Route path="/become-sponsor" element={<BecomeSponsor />} />
               <Route path="/become-partner" element={<BecomePartner />} />
               <Route path="/forum" element={<Forum />} />
+                <Route path="/events/:eventTitle" element={<EventDetail />} />
             </Route>
 
             {/* Auth pages (no shared layout) */}
