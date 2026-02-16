@@ -25,7 +25,7 @@ const partners = [
 ];
 
 const news = [
-  { title: "AME Mentorship Program Launches", date: "Feb 1, 2026", excerpt: "We're pairing experienced aviation professionals with new grads to provide guidance, support, and real industry insight." },
+  { title: "AME Mentorship Organization Launches", date: "Feb 1, 2026", excerpt: "We're pairing experienced aviation professionals with new grads to provide guidance, support, and real industry insight." },
   { title: "New Training Modules Available", date: "Jan 15, 2026", excerpt: "Members now have access to job-readiness training covering interview skills, workplace safety, and technical refreshers." },
   { title: "Partnership with BCIT Announced", date: "Dec 20, 2025", excerpt: "We're working with BCIT to support AME students before they graduate, so they're job-ready on day one." },
 ];

@@ -4,15 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Handshake, ArrowRight } from "lucide-react";
 
 const partners = [
-  { name: "Air Canada", initial: "AC", type: "Airline" },
-  { name: "Jazz Aviation", initial: "JA", type: "Regional Carrier" },
-  { name: "IMP Aerospace", initial: "IA", type: "MRO" },
-  { name: "Bombardier", initial: "BD", type: "Manufacturer" },
-  { name: "WestJet", initial: "WJ", type: "Airline" },
-  { name: "Provincial Aerospace", initial: "PA", type: "MRO" },
-  { name: "BCIT", initial: "BC", type: "School" },
-  { name: "Centennial College", initial: "CC", type: "School" },
-  { name: "Canadore College", initial: "CN", type: "School" },
+  { name: "AME Solutions", image: "/AMESolutions Partner.jpeg", type: "Founding Partner" },
 ];
 
 export default function Partners() {
@@ -36,15 +28,15 @@ export default function Partners() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-12">
+          <div className="flex justify-center mb-12">
             {partners.map((p) => (
-              <Card key={p.name} className="border-0 shadow-sm bg-card hover:shadow-md transition-shadow">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-primary/5 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <span className="text-xl font-bold text-primary">{p.initial}</span>
+              <Card key={p.name} className="border-0 shadow-lg bg-card hover:shadow-xl transition-shadow w-full max-w-md mx-auto">
+                <CardContent className="p-10 flex flex-col items-center">
+                  <div className="w-40 h-40 rounded-2xl flex items-center justify-center mb-6 overflow-hidden bg-primary/5 shadow-md">
+                    <img src={p.image} alt={p.name + ' Logo'} className="object-contain w-full h-full" />
                   </div>
-                  <h3 className="font-semibold">{p.name}</h3>
-                  <p className="text-xs text-muted-foreground">{p.type}</p>
+                  <h3 className="font-bold text-2xl mb-1 text-primary">{p.name}</h3>
+                  <p className="text-base text-muted-foreground mb-2">{p.type}</p>
                 </CardContent>
               </Card>
             ))}

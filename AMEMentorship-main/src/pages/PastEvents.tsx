@@ -7,7 +7,7 @@ const pastEvents = [
   { title: "Career Kickstart Panel", date: "Jan 20, 2026", recap: "50+ grads attended our first panel of 2026. Panelists from Air Canada, Jazz Aviation, and IMP Aerospace shared hiring insights and what they look for in new AME candidates.", attendees: 52 },
   { title: "Networking Night — Vancouver", date: "Dec 5, 2025", recap: "Our first West Coast event brought together 30 attendees with 8 employers. Several attendees received follow-up interviews within the week.", attendees: 30 },
   { title: "Resume Review Day", date: "Nov 15, 2025", recap: "One-on-one resume reviews with industry recruiters. Participants left with polished, aviation-specific resumes ready to send out.", attendees: 25 },
-  { title: "AME Grad Welcome Mixer", date: "Oct 1, 2025", recap: "Our inaugural event. We welcomed the fall graduating class and introduced them to the AME Mentorship Program community and resources.", attendees: 40 },
+  { title: "AME Grad Welcome Mixer", date: "Oct 1, 2025", recap: "Our inaugural event. We welcomed the fall graduating class and introduced them to the AME Mentorship Organization community and resources.", attendees: 40 },
   { title: "Workplace Safety Workshop", date: "Sep 12, 2025", recap: "A hands-on workshop covering safety culture, reporting, and what employers expect from day one on the hangar floor.", attendees: 35 },
 ];
 

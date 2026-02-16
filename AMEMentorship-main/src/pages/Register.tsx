@@ -75,7 +75,7 @@ export default function Register() {
         {/* Logo */}
         <Link to="/" className="flex items-center justify-center gap-2 font-bold text-xl text-primary mb-8">
           <Plane className="h-6 w-6" />
-          AME Mentorship Program
+          AME Mentorship Organization
         </Link>
 
         {/* Progress */}
@@ -100,7 +100,7 @@ export default function Register() {
             {step === 0 && (
               <>
                 <h1 className="text-2xl font-bold text-foreground mb-2">Create Your Account</h1>
-                <p className="text-muted-foreground mb-6">Join AME Mentorship Program — it's free and takes 30 seconds.</p>
+                <p className="text-muted-foreground mb-6">Join AME Mentorship Organization — it's free and takes 30 seconds.</p>
                 
                 <div className="flex justify-center w-full">
                   <GoogleLogin

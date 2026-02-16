@@ -1,2 +1,1 @@
-# AMEMentorship2ndED
-# AMEMentorship3rdED
+# AME Mentorship Organization

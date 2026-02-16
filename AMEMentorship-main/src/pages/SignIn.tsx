@@ -31,7 +31,7 @@ export default function SignIn() {
       <div className="w-full max-w-md">
         <Link to="/" className="flex items-center justify-center gap-2 font-bold text-xl text-primary mb-8">
           <Plane className="h-6 w-6" />
-          AME Mentorship Program
+          AME Mentorship Organization
         </Link>
         
         <Card className="border-0 shadow-lg">

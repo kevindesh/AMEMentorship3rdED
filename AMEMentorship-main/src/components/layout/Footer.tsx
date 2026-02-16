@@ -31,8 +31,8 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-2 font-bold text-lg mb-4">
-              <Plane className="h-5 w-5" />
-              AME Mentorship Program
+              <img src="/AMEMentorshipLogo-removebg-preview.png" alt="AME Mentorship Organization Logo" className="h-10 w-10 object-contain rounded" />
+              AME Mentorship Organization
             </Link>
             <p className="text-sm text-primary-foreground/70 leading-relaxed">
               Helping aviation graduates launch their careers. No gatekeeping. Just honest help.
@@ -72,7 +72,7 @@ export default function Footer() {
 
         <div className="border-t border-primary-foreground/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-primary-foreground/50">
-            © {new Date().getFullYear()} AME Mentorship Program. All rights reserved.
+            © {new Date().getFullYear()} AME Mentorship Organization. All rights reserved.
           </p>
           <p className="text-sm text-primary-foreground/50">
             AMESolutions.ca — Built for the next generation of aviation professionals.

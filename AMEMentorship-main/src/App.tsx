@@ -30,6 +30,7 @@ import TrainingDetail from "./pages/member/TrainingDetail";
 import Careers from "./pages/member/Careers";
 import MemberForum from "./pages/member/MemberForum";
 import ThreadDetail from "./pages/member/ThreadDetail";
+import MemberNews from "./pages/member/MemberNews";
 
 import NotFound from "./pages/NotFound";
 import EventDetail from "./pages/EventDetail";
@@ -76,6 +77,7 @@ const App = () => (
               <Route path="/member/careers" element={<Careers />} />
               <Route path="/member/forum" element={<MemberForum />} />
               <Route path="/member/forum/:threadId" element={<ThreadDetail />} />
+              <Route path="/member/news" element={<MemberNews />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

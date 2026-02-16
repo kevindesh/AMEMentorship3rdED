@@ -17,7 +17,7 @@ export default function AboutUs() {
       <section className="section-padding bg-primary">
         <div className="container-wide mx-auto">
           <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-4">About AME Mentorship Program</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-4">About AME Mentorship Organization</h1>
             <p className="text-lg text-primary-foreground/80">
               We exist because landing your first aviation job shouldn't be this hard. We're here to change that.
             </p>
@@ -34,13 +34,13 @@ export default function AboutUs() {
               AME Solutions Inc. has been actively engaged in the aviation industry, providing consulting services in workforce development, training placement, and technical expertise. We have also been closely partnered with the AME Mentorship Network, an established community of over 300 Aircraft Maintenance Engineers and industry professionals across Canada. Together, we have successfully supported mentorship initiatives, assessment days, and direct employment pathways for new entrants into the aviation industry.
             </p>
             <p>
-              The AME Mentorship Program was born from this collaboration. It started with a simple question: why is it so hard for aircraft maintenance graduates to find their first job?
+              The AME Mentorship Organization was born from this collaboration. It started with a simple question: why is it so hard for aircraft maintenance graduates to find their first job?
             </p>
             <p>
               Graduates spend years training, earning certifications, and preparing for a career in aviation. But when they finish school, many find themselves stuck — unsure where to apply, how to network, or what employers actually want.
             </p>
             <p>
-              We've been there. We know the frustration of sending resumes into a void, not knowing who to talk to, or feeling like the industry has no room for newcomers. That's why we built AME Mentorship Program.
+              We've been there. We know the frustration of sending resumes into a void, not knowing who to talk to, or feeling like the industry has no room for newcomers. That's why we built AME Mentorship Organization.
             </p>
             <p>
               We're a non-profit organization that bridges the gap between aviation school and your first job. We connect graduates with employers, provide job-readiness training, and offer mentorship from experienced professionals who want to see the next generation succeed.
