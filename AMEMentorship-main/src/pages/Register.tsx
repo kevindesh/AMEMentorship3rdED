@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plane, ArrowRight, Check } from "lucide-react";
+import { Plane, ArrowRight, Check, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 const steps = ["Create Account", "Choose Role", "You're In"];
@@ -21,14 +21,50 @@ export default function Register() {
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isEmailSignup, setIsEmailSignup] = useState(false);
   const [googleCredential, setGoogleCredential] = useState("");
   const [role, setRole] = useState<"member" | "mentee" | "mentor">("member");
   const [loading, setLoading] = useState(false);
 
-  const handleGoogleSuccess = (credentialResponse: any) => {
+  const handleEmailNext = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) {
+      toast.error("Please enter both email and password");
+      return;
+    }
+    
+    // Basic password validation
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters");
+      return;
+    }
+    if (!/[A-Z]/.test(password)) {
+      toast.error("Password must contain at least one uppercase letter");
+      return;
+    }
+    if (!/[a-z]/.test(password)) {
+      toast.error("Password must contain at least one lowercase letter");
+      return;
+    }
+    if (!/[0-9]/.test(password)) {
+      toast.error("Password must contain at least one number");
+      return;
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      toast.error("Password must contain at least one special character");
+      return;
+    }
+
+    setIsEmailSignup(true);
+    setStep(1);
+  };
+
+  const handleGoogleSuccess = (credentialResponse: { credential?: string }) => {
     if (credentialResponse.credential) {
       try {
-        const decoded: any = jwtDecode(credentialResponse.credential);
+        const decoded = jwtDecode<{ name?: string; email: string }>(credentialResponse.credential);
         const fullName = decoded.name || "";
         const nameParts = fullName.split(" ");
         if (nameParts.length > 0) setFirstName(nameParts[0]);
@@ -59,7 +95,13 @@ export default function Register() {
     
     const formattedUsername = `${formattedFirstName}. ${formattedLastInitial}`;
     
-    const result = await loginWithGoogle(googleCredential, role, formattedUsername, phone);
+    let result;
+    if (isEmailSignup) {
+      result = await register(email, password, formattedUsername, role, phone);
+    } else {
+      result = await loginWithGoogle(googleCredential, role, formattedUsername, phone);
+    }
+    
     setLoading(false);
     if (result.error) {
       toast.error(result.error);
@@ -102,6 +144,61 @@ export default function Register() {
                 <h1 className="text-2xl font-bold text-foreground mb-2">Create Your Account</h1>
                 <p className="text-muted-foreground mb-6">Join AME Mentorship Organization — it's free and takes 30 seconds.</p>
                 
+                <form onSubmit={handleEmailNext} className="space-y-4 mb-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      placeholder="name@example.com" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password">Password</Label>
+                    <div className="relative">
+                      <Input 
+                        id="password" 
+                        type={showPassword ? "text" : "password"} 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        minLength={8}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </button>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Must be at least 8 characters and contain uppercase, lowercase, number, and special character.
+                    </p>
+                  </div>
+                  <Button type="submit" className="w-full">
+                    Continue with Email
+                  </Button>
+                </form>
+
+                <div className="relative mb-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                      Or continue with
+                    </span>
+                  </div>
+                </div>
+
                 <div className="flex justify-center w-full">
                   <GoogleLogin
                     onSuccess={handleGoogleSuccess}
