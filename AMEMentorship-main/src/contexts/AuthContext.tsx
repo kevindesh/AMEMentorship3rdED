@@ -18,6 +18,8 @@ interface AuthContextType {
   loginWithGoogle: (credential: string, role?: User["role"], customName?: string, phoneNumber?: string) => Promise<{ error?: string }>;
   register: (email: string, password: string, name: string, role: User["role"], phoneNumber?: string) => Promise<{ error?: string }>;
   logout: () => void;
+  resetPassword: (email: string) => Promise<{ error?: string }>;
+  updatePassword: (password: string) => Promise<{ error?: string }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -166,6 +168,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   }, []);
 
+  const resetPassword = useCallback(async (email: string): Promise<{ error?: string }> => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    if (error) {
+       return { error: error.message };
+    }
+    return {};
+  }, []);
+
+  const updatePassword = useCallback(async (password: string): Promise<{ error?: string }> => {
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) {
+       return { error: error.message };
+    }
+    return {};
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -176,6 +195,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         loginWithGoogle,
         register,
         logout,
+        resetPassword,
+        updatePassword,
       }}
     >
       {children}

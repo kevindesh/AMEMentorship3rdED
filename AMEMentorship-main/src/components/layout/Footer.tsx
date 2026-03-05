@@ -31,7 +31,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-2 font-bold text-lg mb-4">
-              <img src="/AMEMentorshipLogo-removebg-preview.png" alt="AME Mentorship Organization Logo" className="h-10 w-10 object-contain rounded" />
+              <img src="/LogoNewTrans.png" alt="AME Mentorship Organization Logo" className="h-10 w-10 object-contain rounded" />
               AME Mentorship Organization
             </Link>
             <p className="text-sm text-primary-foreground/70 leading-relaxed">

@@ -22,6 +22,7 @@ export default function Register() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isEmailSignup, setIsEmailSignup] = useState(false);
   const [googleCredential, setGoogleCredential] = useState("");
@@ -30,8 +31,13 @@ export default function Register() {
 
   const handleEmailNext = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      toast.error("Please enter both email and password");
+    if (!email || !password || !confirmPassword) {
+      toast.error("Please fill in all email and password fields");
+      return;
+    }
+    
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
       return;
     }
     
@@ -107,6 +113,36 @@ export default function Register() {
       toast.error(result.error);
       return;
     }
+
+    // --- Google Sheets Integration ---
+    try {
+      // Replace with your Google Apps Script Web App URL or Zapier/Make Webhook 
+      const webHookUrl = "https://script.google.com/macros/s/AKfycbw0RTmsiQPbydgQRstbSDwiF2kTxMRMwjn78ytH3ZhCdaV7WDFvpJQ5zy9A4IcFDzg5Mg/exec";
+      
+      if (webHookUrl !== "YOUR_GOOGLE_SHEETS_WEBHOOK_URL_HERE") {
+        await fetch(webHookUrl, {
+          method: "POST",
+          mode: "no-cors", // Required to avoid CORS issues directly from the browser to Google Scripts
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName: cleanFirstName,
+            lastName: cleanLastName,
+            username: formattedUsername,
+            email: email,
+            phone: phone,
+            role: role,
+            registeredAt: new Date().toISOString(),
+          }),
+        });
+        console.log("Sent user data to Google Sheets");
+      }
+    } catch (error) {
+      console.error("Failed to send to Google Sheets:", error);
+    }
+    // ---------------------------------
+
     setStep(2);
     setTimeout(() => navigate("/member"), 1500);
   };
@@ -182,6 +218,17 @@ export default function Register() {
                     <p className="text-xs text-muted-foreground mt-1">
                       Must be at least 8 characters and contain uppercase, lowercase, number, and special character.
                     </p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">Confirm Password</Label>
+                    <Input 
+                      id="confirmPassword" 
+                      type={showPassword ? "text" : "password"} 
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      minLength={8}
+                    />
                   </div>
                   <Button type="submit" className="w-full">
                     Continue with Email

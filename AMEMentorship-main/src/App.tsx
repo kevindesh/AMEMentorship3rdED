@@ -21,12 +21,11 @@ import BecomeSponsor from "./pages/BecomeSponsor";
 import BecomePartner from "./pages/BecomePartner";
 import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
+import ResetPassword from "./pages/ResetPassword";
 import Forum from "./pages/Forum";
 
 // Member pages
 import MemberDashboard from "./pages/member/Dashboard";
-import Training from "./pages/member/Training";
-import TrainingDetail from "./pages/member/TrainingDetail";
 import Careers from "./pages/member/Careers";
 import MemberForum from "./pages/member/MemberForum";
 import ThreadDetail from "./pages/member/ThreadDetail";
@@ -68,12 +67,11 @@ const App = () => (
             {/* Auth pages (no shared layout) */}
             <Route path="/register" element={<Register />} />
             <Route path="/signin" element={<SignIn />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
 
             {/* Member routes (protected) */}
             <Route element={<MemberLayout />}>
               <Route path="/member" element={<MemberDashboard />} />
-              <Route path="/member/training" element={<Training />} />
-              <Route path="/member/training/:moduleId" element={<TrainingDetail />} />
               <Route path="/member/careers" element={<Careers />} />
               <Route path="/member/forum" element={<MemberForum />} />
               <Route path="/member/forum/:threadId" element={<ThreadDetail />} />

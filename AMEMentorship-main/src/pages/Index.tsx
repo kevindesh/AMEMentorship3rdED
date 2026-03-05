@@ -4,30 +4,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, Clock, Users, Briefcase, GraduationCap, Building2, MessageSquare, ArrowRight, Star } from "lucide-react";
 import heroImage from "@/assets/hero-aviation.jpg";
 
-const upcomingEvents = [
-  { title: "Resume Workshop for AME Grads", date: "Mar 15, 2026", time: "2:00 PM EST", location: "Online (Zoom)", description: "Learn how to build an aviation-specific resume that gets interviews." },
-  { title: "Employer Meet & Greet", date: "Apr 2, 2026", time: "6:00 PM EST", location: "Toronto, ON", description: "Connect with hiring managers from top Canadian MROs." },
-  { title: "Interview Prep Bootcamp", date: "Apr 20, 2026", time: "10:00 AM EST", location: "Online (Zoom)", description: "Mock interviews, feedback, and tips from industry veterans." },
-];
-
-const pastEvents = [
-  { title: "Career Kickstart Panel", date: "Jan 20, 2026", recap: "50+ grads attended. Panelists from Air Canada, Jazz Aviation, and IMP Aerospace shared hiring insights." },
-  { title: "Networking Night — Vancouver", date: "Dec 5, 2025", recap: "Our first West Coast event. 30 attendees connected with 8 employers." },
+const upcomingEvents: { title: string; date: string; time: string; location: string; description: string }[] = [
+  // { title: "Resume Workshop for AME Grads", date: "Mar 15, 2026", time: "2:00 PM EST", location: "Online (Zoom)", description: "Learn how to build an aviation-specific resume that gets interviews." },
+  // { title: "Employer Meet & Greet", date: "Apr 2, 2026", time: "6:00 PM EST", location: "Toronto, ON", description: "Connect with hiring managers from top Canadian MROs." },
+  // { title: "Interview Prep Bootcamp", date: "Apr 20, 2026", time: "10:00 AM EST", location: "Online (Zoom)", description: "Mock interviews, feedback, and tips from industry veterans." },
 ];
 
 const partners = [
-  { name: "Air Canada", initial: "AC" },
-  { name: "Jazz Aviation", initial: "JA" },
-  { name: "IMP Aerospace", initial: "IA" },
-  { name: "Bombardier", initial: "BD" },
-  { name: "WestJet", initial: "WJ" },
-  { name: "Provincial Aerospace", initial: "PA" },
+  { name: "AME Solutions", image: "/AMESolutions Partner.jpeg", type: "Founding Partner" },
 ];
 
-const news = [
-  { title: "AME Mentorship Organization Launches", date: "Feb 1, 2026", excerpt: "We're pairing experienced aviation professionals with new grads to provide guidance, support, and real industry insight." },
-  { title: "New Training Modules Available", date: "Jan 15, 2026", excerpt: "Members now have access to job-readiness training covering interview skills, workplace safety, and technical refreshers." },
-  { title: "Partnership with BCIT Announced", date: "Dec 20, 2025", excerpt: "We're working with BCIT to support AME students before they graduate, so they're job-ready on day one." },
+const news: { title: string; date: string; excerpt: string }[] = [
+  // { title: "AME Mentorship Organization Launches", date: "Feb 1, 2026", excerpt: "We're pairing experienced aviation professionals with new grads to provide guidance, support, and real industry insight." },
+  // { title: "New Training Modules Available", date: "Jan 15, 2026", excerpt: "Members now have access to job-readiness training covering interview skills, workplace safety, and technical refreshers." },
+  // { title: "Partnership with BCIT Announced", date: "Dec 20, 2025", excerpt: "We're working with BCIT to support AME students before they graduate, so they're job-ready on day one." },
 ];
 
 const forumTopics = [
@@ -121,24 +111,34 @@ export default function HomePage() {
       <section className="section-padding bg-muted/50">
         <div className="container-wide mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">Upcoming Events</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {upcomingEvents.map((event) => (
-              <Card key={event.title} className="border-0 shadow-sm bg-card hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2 text-accent text-sm font-medium mb-3">
-                    <Calendar className="h-4 w-4" />
-                    {event.date}
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2">{event.title}</h3>
-                  <p className="text-muted-foreground text-sm mb-4">{event.description}</p>
-                  <div className="space-y-1 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> {event.time}</div>
-                    <div className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> {event.location}</div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          {upcomingEvents.length > 0 ? (
+            <div className="grid md:grid-cols-3 gap-6">
+              {upcomingEvents.map((event) => (
+                <Card key={event.title} className="border-0 shadow-sm bg-card hover:shadow-md transition-shadow">
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-2 text-accent text-sm font-medium mb-3">
+                      <Calendar className="h-4 w-4" />
+                      {event.date}
+                    </div>
+                    <h3 className="font-semibold text-lg mb-2">{event.title}</h3>
+                    <p className="text-muted-foreground text-sm mb-4">{event.description}</p>
+                    <div className="space-y-1 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> {event.time}</div>
+                      <div className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> {event.location}</div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <Card className="border-0 shadow-sm bg-card text-center py-12">
+              <CardContent className="flex flex-col items-center justify-center p-6">
+                <Calendar className="h-12 w-12 text-muted-foreground mb-4 opacity-50" />
+                <h3 className="text-xl font-semibold mb-2">No upcoming events</h3>
+                <p className="text-muted-foreground">Check back later for new workshops, networking nights, and more.</p>
+              </CardContent>
+            </Card>
+          )}
           <div className="text-center mt-8">
             <Button asChild variant="outline">
               <Link to="/events/upcoming">View All Events <ArrowRight className="h-4 w-4" /></Link>
@@ -151,21 +151,39 @@ export default function HomePage() {
       <section className="section-padding bg-background">
         <div className="container-wide mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">Past Events</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {pastEvents.map((event) => (
-              <Card key={event.title} className="border-0 shadow-sm bg-card">
-                <CardContent className="p-6">
-                  <p className="text-sm text-muted-foreground mb-2">{event.date}</p>
-                  <h3 className="font-semibold text-lg mb-2">{event.title}</h3>
-                  <p className="text-muted-foreground text-sm">{event.recap}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          <div className="text-center mt-8">
-            <Button asChild variant="link">
-              <Link to="/events/past">See All Past Events <ArrowRight className="h-4 w-4" /></Link>
-            </Button>
+          <div className="max-w-5xl mx-auto">
+            <Card className="border-0 shadow-md bg-card overflow-hidden">
+              <CardContent className="p-0">
+                <div className="flex flex-col md:flex-row h-full">
+                  <div className="md:w-1/2 p-8 md:p-10 flex flex-col justify-center bg-muted/30">
+                    <p className="text-sm text-accent font-medium mb-2 flex items-center gap-2">
+                       <Calendar className="h-4 w-4" /> Recent Event
+                    </p>
+                    <h3 className="text-2xl font-bold text-foreground mb-4">AME Mentorship Highlights</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                      Check out the highlights from our most recent networking and mentorship event! See familiar faces and catch a glimpse of the community coming together to build relationships and support the next generation of aviation professionals.
+                    </p>
+                    <div className="mt-2">
+                      <Button asChild variant="outline">
+                        <Link to="/events/past">View Full Details <ArrowRight className="h-4 w-4 ml-2" /></Link>
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="md:w-1/2 bg-black/5 flex items-center justify-center relative min-h-[300px] md:min-h-[400px]">
+                    <video 
+                      className="w-full h-full object-cover max-h-[400px]" 
+                      controls 
+                      controlsList="nodownload"
+                      preload="metadata"
+                      poster="/og-image.jpg"
+                    >
+                      <source src="/WhatsAppVideo.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -179,12 +197,17 @@ export default function HomePage() {
               We work with leading aviation companies and schools to create real opportunities for new talent.
             </p>
           </div>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mb-8">
+          <div className="flex justify-center mb-12">
             {partners.map((p) => (
-              <div key={p.name} className="bg-card rounded-lg p-4 flex flex-col items-center justify-center aspect-square shadow-sm border border-border/50">
-                <span className="text-2xl font-bold text-primary mb-1">{p.initial}</span>
-                <span className="text-xs text-muted-foreground text-center">{p.name}</span>
-              </div>
+              <Card key={p.name} className="border-0 shadow-lg bg-card hover:shadow-xl transition-shadow w-full max-w-sm mx-auto">
+                <CardContent className="p-8 flex flex-col items-center">
+                  <div className="w-32 h-32 rounded-2xl flex items-center justify-center mb-6 overflow-hidden bg-primary/5 shadow-md">
+                    <img src={p.image} alt={p.name + ' Logo'} className="object-contain w-full h-full" />
+                  </div>
+                  <h3 className="font-bold text-xl mb-1 text-primary">{p.name}</h3>
+                  <p className="text-sm text-muted-foreground">{p.type}</p>
+                </CardContent>
+              </Card>
             ))}
           </div>
           <div className="flex flex-wrap justify-center gap-4">
@@ -194,6 +217,9 @@ export default function HomePage() {
             <Button asChild variant="outline">
               <Link to="/become-partner">Become a Partner</Link>
             </Button>
+            <Button asChild variant="outline">
+              <Link to="/partners">View All Partners</Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -202,17 +228,27 @@ export default function HomePage() {
       <section className="section-padding bg-background">
         <div className="container-wide mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">Recent News</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {news.map((item) => (
-              <Card key={item.title} className="border-0 shadow-sm bg-card hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <p className="text-sm text-accent font-medium mb-2">{item.date}</p>
-                  <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm">{item.excerpt}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          {news.length > 0 ? (
+            <div className="grid md:grid-cols-3 gap-6">
+              {news.map((item) => (
+                <Card key={item.title} className="border-0 shadow-sm bg-card hover:shadow-md transition-shadow">
+                  <CardContent className="p-6">
+                    <p className="text-sm text-accent font-medium mb-2">{item.date}</p>
+                    <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+                    <p className="text-muted-foreground text-sm">{item.excerpt}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <Card className="border-0 shadow-sm bg-muted/50 text-center py-12">
+              <CardContent className="flex flex-col items-center justify-center p-6">
+                <Star className="h-12 w-12 text-muted-foreground mb-4 opacity-50" />
+                <h3 className="text-xl font-semibold mb-2">No recent news</h3>
+                <p className="text-muted-foreground">Check back later for updates, announcements, and success stories from our community.</p>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </section>
 

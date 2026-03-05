@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, MessageSquare, Briefcase, ArrowRight, Sparkles } from "lucide-react";
+import { GraduationCap, MessageSquare, Briefcase, Calendar, ArrowRight, Sparkles } from "lucide-react";
 
 export default function MemberDashboard() {
   const { user } = useAuth();
@@ -25,25 +25,26 @@ export default function MemberDashboard() {
           <CardContent className="p-5 flex items-center gap-4">
             <Sparkles className="h-6 w-6 text-accent shrink-0" />
             <div>
-              <p className="font-medium text-sm text-foreground">Next Step: Complete your first training module</p>
-              <p className="text-xs text-muted-foreground">Start with "Resume Essentials" to build your aviation-specific resume.</p>
+              <p className="font-medium text-sm text-foreground">Next Step: Introduce yourself in the forum</p>
+              <p className="text-xs text-muted-foreground">Start by sharing your background and goals with the community.</p>
             </div>
           </CardContent>
         </Card>
 
         {/* Main Cards */}
         <div className="grid md:grid-cols-3 gap-6">
+
           <Card className="border-0 shadow-md bg-card hover:shadow-lg transition-shadow group">
             <CardContent className="p-8">
               <div className="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center mb-5">
-                <GraduationCap className="h-7 w-7 text-accent" />
+                <Calendar className="h-7 w-7 text-accent" />
               </div>
-              <h2 className="text-xl font-bold text-foreground mb-2">Training</h2>
+              <h2 className="text-xl font-bold text-foreground mb-2">Events</h2>
               <p className="text-muted-foreground text-sm mb-6">
-                Job-readiness modules covering resumes, interviews, safety culture, and technical refreshers.
+                Discover upcoming webinars, meetups, and in-person networking opportunities tailored for you.
               </p>
               <Button asChild variant="gold" className="w-full group-hover:shadow-sm">
-                <Link to="/member/training">Start Training <ArrowRight className="h-4 w-4" /></Link>
+                <Link to="/events/upcoming">View Events <ArrowRight className="h-4 w-4" /></Link>
               </Button>
             </CardContent>
           </Card>

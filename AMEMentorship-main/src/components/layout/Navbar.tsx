@@ -52,7 +52,7 @@ export default function Navbar() {
       <nav className="container-wide mx-auto flex items-center justify-between h-16 px-4 md:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 font-bold text-xl text-primary">
-          <img src="/AMEMentorshipLogo-removebg-preview.png" alt="AME Mentorship Organization Logo" className="h-10 w-10 object-contain rounded" />
+          <img src="/LogoNewTrans.png" alt="AME Mentorship Organization Logo" className="h-10 w-10 object-contain rounded" />
           <span>AME Mentorship Organization</span>
         </Link>
 
@@ -113,9 +113,6 @@ export default function Navbar() {
               <Link to="/member" className="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground">
                 Dashboard
               </Link>
-              <Link to="/member/training" className="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground">
-                Training
-              </Link>
               <Link to="/member/forum" className="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground">
                 Forum
               </Link>
@@ -169,7 +166,7 @@ export default function Navbar() {
           <SheetContent side="right" className="w-80 p-0">
             <div className="flex items-center justify-between p-4 border-b border-border">
               <span className="font-bold text-lg text-primary flex items-center gap-2">
-                <img src="/AMEMentorshipLogo-removebg-preview.png" alt="AME Mentorship Organization Logo" className="h-6 w-6 object-contain rounded" /> AME Mentorship Organization
+                <img src="/LogoNewTrans.png" alt="AME Mentorship Organization Logo" className="h-6 w-6 object-contain rounded" /> AME Mentorship Organization
               </span>
             </div>
             <div className="p-4 space-y-1 overflow-y-auto max-h-[calc(100vh-8rem)]">
@@ -192,7 +189,6 @@ export default function Navbar() {
               {isMember && (
                 <>
                   <Link to="/member" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-md">Dashboard</Link>
-                  <Link to="/member/training" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-md">Training</Link>
                   <Link to="/member/forum" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-md">Forum</Link>
                   <Link to="/member/news" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-md">News</Link>
                   <Link to="/member/careers" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-md">Careers</Link>
