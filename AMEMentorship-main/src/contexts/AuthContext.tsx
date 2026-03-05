@@ -172,11 +172,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const resetPassword = useCallback(async (email: string): Promise<{ error?: string }> => {
-    // Determine the base URL. If we're on localhost, you can still force it to production, 
-    // but typically we use the Vercel domain as the primary redirect.
+    // Determine the base URL.
     const baseUrl = import.meta.env.PROD 
-      ? "https://ame-mentorship3rd-ed.vercel.app" 
-      : "https://ame-mentorship3rd-ed.vercel.app"; // Forcing Vercel even when testing locally, per request
+      ? "https://www.amementorship.org" 
+      : "https://www.amementorship.org"; // Forcing production domain even when testing locally, per request
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${baseUrl}/reset-password`,
