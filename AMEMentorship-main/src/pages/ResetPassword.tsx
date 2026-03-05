@@ -20,20 +20,35 @@ export default function ResetPassword() {
   const [checkingSession, setCheckingSession] = useState(true);
 
   useEffect(() => {
-    // Check if a session exists as soon as the page loads
-    supabase.auth.getSession().then(({ data: { session }, error }) => {
-      if (error || !session) {
-        setSessionError(true);
-      }
+    // Check if the URL contains a hash (access_token) which Supabase uses for recovery
+    const hash = window.location.hash;
+    
+    if (hash && hash.includes("type=recovery")) {
+      // Supabase is currently processing the recovery token in the background.
+      // Wait for the onAuthStateChange event to trigger.
       setCheckingSession(false);
-    });
+      setSessionError(false);
+    } else {
+      // Check if a session exists as soon as the page loads
+      supabase.auth.getSession().then(({ data: { session }, error }) => {
+        if (error || !session) {
+          setSessionError(true);
+        }
+        setCheckingSession(false);
+      });
+    }
 
     // Listen for auth state changes (e.g. Supabase automatically exchanging the URL code for a session)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session) {
+      if (event === 'PASSWORD_RECOVERY') {
         setSessionError(false);
+        setCheckingSession(false);
+      } else if (session) {
+        setSessionError(false);
+        setCheckingSession(false);
       } else {
         setSessionError(true);
+        setCheckingSession(false);
       }
     });
 

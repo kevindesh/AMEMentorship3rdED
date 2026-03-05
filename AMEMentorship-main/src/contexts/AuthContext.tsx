@@ -41,7 +41,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (_event === 'PASSWORD_RECOVERY') {
+         // Stop any loading state if needed, password recovery token has been processed
+      }
       if (session) {
          setUser({
           id: session.user.id,
