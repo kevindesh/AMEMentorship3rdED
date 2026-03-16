@@ -18,7 +18,7 @@ const publicNav: NavItem[] = [
     children: [
       { label: "About Us", href: "/about" },
       { label: "Contact Us", href: "/contact" },
-      { label: "LinkedIn", href: "https://linkedin.com/company/ame-solutions", external: true },
+      { label: "LinkedIn", href: "https://www.linkedin.com/company/ame-mentorship-organization", external: true },
     ],
   },
   {

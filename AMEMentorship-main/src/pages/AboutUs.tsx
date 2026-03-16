@@ -31,22 +31,22 @@ export default function AboutUs() {
           <h2 className="text-3xl font-bold text-foreground mb-6">Our Story</h2>
           <div className="prose prose-lg max-w-none space-y-4 text-muted-foreground">
             <p className="text-foreground font-medium">
-              AME Solutions Inc. has been actively engaged in the aviation industry, providing consulting services in workforce development, training placement, and technical expertise. We have also been closely partnered with the AME Mentorship Network, an established community of over 300 Aircraft Maintenance Engineers and industry professionals across Canada. Together, we have successfully supported mentorship initiatives, assessment days, and direct employment pathways for new entrants into the aviation industry.
+              AME Mentorship Organization is actively engaged in the aviation industry, supporting workforce development, mentorship programs, and career pathway initiatives for aspiring aviation professionals. Our focus is on strengthening the transition between aviation training and employment by connecting graduates with experienced professionals and employers across Canada.
             </p>
             <p>
-              The AME Mentorship Organization was born from this collaboration. It started with a simple question: why is it so hard for aircraft maintenance graduates to find their first job?
+              Through these efforts, we have developed a growing professional network of more than 300 Aircraft Maintenance Engineers and aviation industry professionals nationwide. Together, we support mentorship initiatives, organize industry assessment days, and help create direct employment pathways designed to assist new entrants in successfully entering the aviation workforce.
             </p>
             <p>
-              Graduates spend years training, earning certifications, and preparing for a career in aviation. But when they finish school, many find themselves stuck — unsure where to apply, how to network, or what employers actually want.
+              The AME Mentorship Organization was built around a simple but important question: why is it so difficult for aircraft maintenance graduates to secure their first job?
             </p>
             <p>
-              We've been there. We know the frustration of sending resumes into a void, not knowing who to talk to, or feeling like the industry has no room for newcomers. That's why we built AME Mentorship Organization.
+              Many students invest years completing rigorous training programs and certifications to prepare for careers in aviation maintenance. Yet after graduating, many face challenges transitioning into the workforce. They often struggle to identify opportunities, build industry connections, and understand what employers expect from entry-level technicians.
             </p>
             <p>
-              We're a non-profit organization that bridges the gap between aviation school and your first job. We connect graduates with employers, provide job-readiness training, and offer mentorship from experienced professionals who want to see the next generation succeed.
+              AME Mentorship Organization was created to help close this gap. As a non-profit organization, we bridge the gap between aviation education and meaningful employment opportunities. We connect graduates with employers, provide job-readiness guidance, and offer mentorship from experienced professionals dedicated to helping the next generation succeed in aviation.
             </p>
             <p className="text-foreground font-medium">
-              No complicated processes. No hidden fees. Just honest help that leads to real offers.
+              Our approach is simple: practical support, real mentorship, and clear pathways that help skilled graduates move forward into careers in the aviation industry.
             </p>
           </div>
         </div>
