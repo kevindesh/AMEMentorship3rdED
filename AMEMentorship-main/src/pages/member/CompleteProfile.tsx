@@ -73,7 +73,7 @@ export default function CompleteProfile() {
           setNewcomerStatus(data.newcomer_status || "");
         } else {
           // If no profile data, check token role
-          const storedRole = user.user_metadata?.role || "mentee";
+          const storedRole = user?.role || "mentee";
           setRole(storedRole);
         }
       } catch (error) {
@@ -112,7 +112,7 @@ export default function CompleteProfile() {
 
       const { error } = await supabase
         .from("profiles")
-        .upsert(updates, { returning: "minimal" });
+        .upsert(updates);
 
       if (error) throw error;
       toast({ title: "Profile Updated", description: "Your directory profile has been saved." });

@@ -20,6 +20,7 @@ const publicNav: NavItem[] = [
       { label: "Contact Us", href: "/contact" },
       { label: "LinkedIn", href: "https://www.linkedin.com/company/ame-mentorship-organization", external: true },
     ],
+  },
   {
     label: "Events",
     children: [

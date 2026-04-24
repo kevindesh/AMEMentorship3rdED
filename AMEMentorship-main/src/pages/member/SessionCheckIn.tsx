@@ -31,7 +31,7 @@ export default function SessionCheckIn() {
     try {
       const { error } = await supabase.from("session_feedback").insert({
         user_id: user.id,
-        role: user.user_metadata?.role || "unknown",
+        role: user.role || "unknown",
         session_happened: happened,
         fit_rating: happened === "Yes" ? parseInt(rating) : null,
         additional_notes: notes,
