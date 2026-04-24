@@ -30,9 +30,15 @@ import Careers from "./pages/member/Careers";
 import MemberForum from "./pages/member/MemberForum";
 import ThreadDetail from "./pages/member/ThreadDetail";
 import MemberNews from "./pages/member/MemberNews";
+import CompleteProfile from "./pages/member/CompleteProfile";
+import Directory from "./pages/member/Directory";
+import ProfileDetail from "./pages/member/ProfileDetail";
+import SessionCheckIn from "./pages/member/SessionCheckIn";
 
 import NotFound from "./pages/NotFound";
 import EventDetail from "./pages/EventDetail";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CodeOfConduct from "./pages/CodeOfConduct";
 
 const queryClient = new QueryClient();
 
@@ -68,10 +74,16 @@ const App = () => (
             <Route path="/register" element={<Register />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/code-of-conduct" element={<CodeOfConduct />} />
 
             {/* Member routes (protected) */}
             <Route element={<MemberLayout />}>
               <Route path="/member" element={<MemberDashboard />} />
+              <Route path="/member/complete-profile" element={<CompleteProfile />} />
+              <Route path="/member/directory" element={<Directory />} />
+              <Route path="/member/directory/:id" element={<ProfileDetail />} />
+              <Route path="/member/session-check-in" element={<SessionCheckIn />} />
               <Route path="/member/careers" element={<Careers />} />
               <Route path="/member/forum" element={<MemberForum />} />
               <Route path="/member/forum/:threadId" element={<ThreadDetail />} />

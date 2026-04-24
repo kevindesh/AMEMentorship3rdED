@@ -20,7 +20,8 @@ const publicNav: NavItem[] = [
       { label: "Contact Us", href: "/contact" },
       { label: "LinkedIn", href: "https://www.linkedin.com/company/ame-mentorship-organization", external: true },
     ],
-  },
+  },  npx supabase init
+  npx supabase functions new profile-reminder
   {
     label: "Events",
     children: [
@@ -113,6 +114,9 @@ export default function Navbar() {
               <Link to="/member" className="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground">
                 Dashboard
               </Link>
+              <Link to="/member/directory" className="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground">
+                Directory
+              </Link>
               <Link to="/member/forum" className="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground">
                 Forum
               </Link>
@@ -189,6 +193,7 @@ export default function Navbar() {
               {isMember && (
                 <>
                   <Link to="/member" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-md">Dashboard</Link>
+                  <Link to="/member/directory" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-md">Directory</Link>
                   <Link to="/member/forum" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-md">Forum</Link>
                   <Link to="/member/news" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-md">News</Link>
                   <Link to="/member/careers" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-md">Careers</Link>

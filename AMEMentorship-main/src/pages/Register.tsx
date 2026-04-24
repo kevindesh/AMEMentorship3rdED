@@ -8,6 +8,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 import { Plane, ArrowRight, Check, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
@@ -26,8 +28,22 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [isEmailSignup, setIsEmailSignup] = useState(false);
   const [googleCredential, setGoogleCredential] = useState("");
-  const [role, setRole] = useState<"member" | "mentee" | "mentor">("member");
+  const [role, setRole] = useState<"mentee" | "mentor">("mentee");
   const [loading, setLoading] = useState(false);
+
+  // Mentor specific fields
+  const [yearsInAviation, setYearsInAviation] = useState("");
+  const [currentRole, setCurrentRole] = useState("");
+  const [employer, setEmployer] = useState("");
+  const [location, setLocation] = useState("");
+  const [whyMentor, setWhyMentor] = useState("");
+  const [consent, setConsent] = useState(false);
+
+  // Mentee specific fields
+  const [menteeStatus, setMenteeStatus] = useState("");
+  const [aviationInterest, setAviationInterest] = useState<string[]>([]);
+  const [currentStage, setCurrentStage] = useState("");
+  const [menteeGoal, setMenteeGoal] = useState("");
 
   const handleEmailNext = (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,9 +102,30 @@ export default function Register() {
   };
 
   const handleRoleSubmit = async () => {
-    if (!firstName || !lastName || !role || !phone) {
-      toast.error("Please fill in all fields");
+    if (loading) return;
+
+    if (!firstName || !lastName || !role || !phone || !location) {
+      toast.error("Please fill in all basic fields including location");
       return;
+    }
+
+    if (!consent) {
+      toast.error("Please agree to the Privacy Policy & Code of Conduct");
+      return;
+    }
+
+    if (role === "mentor") {
+      if (!yearsInAviation || !currentRole || !whyMentor) {
+        toast.error("Please fill in all required mentor fields");
+        return;
+      }
+    }
+
+    if (role === "mentee") {
+      if (!menteeStatus || aviationInterest.length === 0 || !currentStage || !menteeGoal) {
+        toast.error("Please fill in all required mentee fields");
+        return;
+      }
     }
 
     setLoading(true);
@@ -108,18 +145,21 @@ export default function Register() {
       result = await loginWithGoogle(googleCredential, role, formattedUsername, phone);
     }
     
-    setLoading(false);
     if (result.error) {
+      setLoading(false);
       toast.error(result.error);
       return;
     }
 
     // --- Google Sheets Integration ---
     try {
-      // Replace with your Google Apps Script Web App URL or Zapier/Make Webhook 
-      const webHookUrl = "https://script.google.com/macros/s/AKfycbw0RTmsiQPbydgQRstbSDwiF2kTxMRMwjn78ytH3ZhCdaV7WDFvpJQ5zy9A4IcFDzg5Mg/exec";
+      // Replace with your Google Apps Script Web App URLs
+      const mentorWebHookUrl = "https://script.google.com/macros/s/AKfycbyFlaKoq6vNudSQML9LoJ8oCq_jlAS0PmNXuzD5nOCKHhfVgL_rBrghiTFQ2_-vDSGbMg/exec"; // Current one for mentors
+      const menteeWebHookUrl = "https://script.google.com/macros/s/AKfycbwFhBY0z1z5cohjWSb4rGUsv8iBIDwzGOcSasVBvHxKsmfTwGLYYQNURJkfkM2VXTo5/exec"; // New one for mentees
       
-      if (webHookUrl !== "YOUR_GOOGLE_SHEETS_WEBHOOK_URL_HERE") {
+      const webHookUrl = role === "mentor" ? mentorWebHookUrl : menteeWebHookUrl;
+      
+      if (webHookUrl) {
         await fetch(webHookUrl, {
           method: "POST",
           mode: "no-cors", // Required to avoid CORS issues directly from the browser to Google Scripts
@@ -132,8 +172,18 @@ export default function Register() {
             username: formattedUsername,
             email: email,
             phone: phone,
+            location: location,
             role: role,
             registeredAt: new Date().toISOString(),
+            yearsInAviation: role === "mentor" ? yearsInAviation : "",
+            currentRole: role === "mentor" ? currentRole : "",
+            employer: role === "mentor" ? employer : "",
+            whyMentor: role === "mentor" ? whyMentor : "",
+            menteeStatus: role === "mentee" ? menteeStatus : "",
+            aviationInterest: role === "mentee" ? aviationInterest.join(", ") : "",
+            currentStage: role === "mentee" ? currentStage : "",
+            menteeGoal: role === "mentee" ? menteeGoal : "",
+            consent: consent,
           }),
         });
         console.log("Sent user data to Google Sheets");
@@ -293,27 +343,31 @@ export default function Register() {
                   </div>
                 </div>
 
-                <div className="space-y-2 mb-6">
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Input 
-                    id="phone" 
-                    type="tel"
-                    value={phone} 
-                    onChange={(e) => setPhone(e.target.value)} 
-                    placeholder="(555) 123-4567"
-                  />
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Phone Number</Label>
+                    <Input 
+                      id="phone" 
+                      type="tel"
+                      value={phone} 
+                      onChange={(e) => setPhone(e.target.value)} 
+                      placeholder="(555) 123-4567"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="location">Location (City) *</Label>
+                    <Input 
+                      id="location" 
+                      value={location} 
+                      onChange={(e) => setLocation(e.target.value)} 
+                      placeholder="City"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-2 mb-4">
                   <Label>I am joining as a:</Label>
                   <RadioGroup value={role} onValueChange={(v) => setRole(v as typeof role)} className="space-y-3">
-                  <label className="flex items-start gap-3 p-4 rounded-lg border border-border hover:border-accent cursor-pointer transition-colors">
-                    <RadioGroupItem value="member" className="mt-0.5" />
-                    <div>
-                      <p className="font-semibold">Member</p>
-                      <p className="text-sm text-muted-foreground">I'm a student or grad looking for career support.</p>
-                    </div>
-                  </label>
                   <label className="flex items-start gap-3 p-4 rounded-lg border border-border hover:border-accent cursor-pointer transition-colors">
                     <RadioGroupItem value="mentee" className="mt-0.5" />
                     <div>
@@ -329,6 +383,134 @@ export default function Register() {
                     </div>
                   </label>
                 </RadioGroup>
+                </div>
+
+                {role === "mentee" && (
+                  <div className="space-y-4 mb-6">
+                    <h3 className="font-semibold text-lg border-b pb-2">Mentee Details</h3>
+                    
+                    <div className="space-y-3">
+                      <Label>Status *</Label>
+                      <RadioGroup value={menteeStatus} onValueChange={setMenteeStatus} className="grid grid-cols-2 gap-2">
+                        {["Newcomer", "Career Changer", "Student", "In-Industry"].map(status => (
+                          <label key={status} className="flex items-center space-x-2 border p-2 rounded-md cursor-pointer hover:bg-accent/50">
+                            <RadioGroupItem value={status} />
+                            <span className="text-sm">{status}</span>
+                          </label>
+                        ))}
+                      </RadioGroup>
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label>Aviation Interest Area *</Label>
+                      <div className="grid grid-cols-2 gap-3 border p-3 rounded-md">
+                        {["AME M/E", "Avionics", "Structures", "Painting", "Operations"].map(interest => (
+                          <div key={interest} className="flex items-center space-x-2">
+                            <Checkbox 
+                              id={`interest-${interest.replace(/\s+/g, '-')}`}
+                              checked={aviationInterest.includes(interest)}
+                              onCheckedChange={(checked) => {
+                                setAviationInterest(prev => 
+                                  checked ? [...prev, interest] : prev.filter(i => i !== interest)
+                                )
+                              }}
+                            />
+                            <Label htmlFor={`interest-${interest.replace(/\s+/g, '-')}`} className="text-sm font-normal cursor-pointer">{interest}</Label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label>Current Stage *</Label>
+                      <RadioGroup value={currentStage} onValueChange={setCurrentStage} className="grid grid-cols-2 gap-2">
+                        {["Exploring", "Studying", "Apprentice", "Job-Searching"].map(stage => (
+                          <label key={stage} className="flex items-center space-x-2 border p-2 rounded-md cursor-pointer hover:bg-accent/50">
+                            <RadioGroupItem value={stage} />
+                            <span className="text-sm">{stage}</span>
+                          </label>
+                        ))}
+                      </RadioGroup>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="menteeGoal">What's your goal? *</Label>
+                      <Textarea
+                        id="menteeGoal" 
+                        value={menteeGoal} 
+                        onChange={(e) => setMenteeGoal(e.target.value)} 
+                        maxLength={200}
+                        placeholder="Share what you hope to achieve... (Max 200 chars)"
+                        className="resize-none h-24"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {role === "mentor" && (
+                  <div className="space-y-4 mb-6">
+                    <h3 className="font-semibold text-lg border-b pb-2">Mentor Details</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="yearsInAviation">Years in Aviation *</Label>
+                        <Input 
+                          id="yearsInAviation" 
+                          type="number"
+                          min="5"
+                          value={yearsInAviation} 
+                          onChange={(e) => setYearsInAviation(e.target.value)} 
+                          placeholder="e.g. 5"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="currentRole">Current Role *</Label>
+                        <Input 
+                          id="currentRole" 
+                          value={currentRole} 
+                          onChange={(e) => setCurrentRole(e.target.value)} 
+                          placeholder="AME M/E, Avionics, etc."
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="employer">Employer (Optional)</Label>
+                      <Input 
+                        id="employer" 
+                        value={employer} 
+                        onChange={(e) => setEmployer(e.target.value)} 
+                        placeholder="Company name"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="whyMentor">Why do you want to mentor? *</Label>
+                      <Textarea
+                        id="whyMentor" 
+                        value={whyMentor} 
+                        onChange={(e) => setWhyMentor(e.target.value)} 
+                        maxLength={200}
+                        placeholder="Max 200 characters..."
+                        className="resize-none h-24"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-start space-x-2 mt-2 mb-6 pt-2">
+                  <Checkbox 
+                    id="consent" 
+                    checked={consent}
+                    onCheckedChange={(checked) => setConsent(checked as boolean)}
+                  />
+                  <div className="grid gap-1.5 leading-none">
+                    <Label htmlFor="consent" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                      I agree to the <Link to="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy Policy</Link> & <Link to="/code-of-conduct" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Code of Conduct</Link> *
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      You must agree to our terms to join the mentorship program.
+                    </p>
+                  </div>
                 </div>
                 
                 <Button onClick={handleRoleSubmit} variant="gold" className="w-full" size="lg" disabled={loading}>
