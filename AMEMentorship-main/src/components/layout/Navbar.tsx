@@ -20,8 +20,6 @@ const publicNav: NavItem[] = [
       { label: "Contact Us", href: "/contact" },
       { label: "LinkedIn", href: "https://www.linkedin.com/company/ame-mentorship-organization", external: true },
     ],
-  },  npx supabase init
-  npx supabase functions new profile-reminder
   {
     label: "Events",
     children: [
